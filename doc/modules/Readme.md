@@ -1,4 +1,4 @@
-# [MacAdamia](/) Modules
+# [MacAdamia](../) Modules
 
  * [HTML-Error](htmlerror.md)
    Serves Static HTML-Files as error responses.
