@@ -1,0 +1,6 @@
+{
+  "name":"htmlerror",
+  "version":"0.1.0",
+  "description":"serve static html error files",
+  "main":"./htmlerror.js"
+}

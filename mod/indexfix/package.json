@@ -1,0 +1,6 @@
+{
+  "name":"index",
+  "version":"0.1.0",
+  "description":"Makes sure that directories do not end in a / and tries index-files",
+  "main":"indexfix.js"
+}
