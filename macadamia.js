@@ -32,7 +32,8 @@ if (require.main === module) (function() {
     errors:{ root:__dirname+'/err/' },
     index:[ '.md', '/Readme.md' ],
     indexName:'Readme',
-    maxAge:0
+    maxAge:0,
+    markdown:{ fixIndexLinks:true }
   };
   var http = require('http');
   var app = macadamia();

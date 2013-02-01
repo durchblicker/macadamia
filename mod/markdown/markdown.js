@@ -60,6 +60,17 @@ function setup(options) {
         var title = content.replace(/^[\s|\S]*\<h1[^\>]*?\>([\s|\S]*?)\<\/\s*h1[\s|\S]*$/, '$1').replace(/\<[\s|\S]+?\>/g,'').split('\0').join('\n');
         content = [ options.markdown.before , content, options.markdown.after ].join('\0').split(/\r?\n/).join('\0');
         content = content.replace(/\$\{\s*title\s*\}/gi, title);
+
+        var basename = path.basename(file.path, path.extname(file.path));
+        if (options.markdown.fixIndexLinks && (basename === options.indexName)) {
+          content = content.replace(/(src|href)=\"([\s|\S]+?)\"/g, function(match, attr, link) {
+            if (/\w\:\/\//.exec(link)) return match;
+            if (link.indexOf('/') === 0) return match;
+            link = req.url.pathname.slice(0, req.url.pathname.indexOf(path.basename(req.url.pathname)) - 1)+'/'+link;
+            link = path.normalize(link);
+            return attr+'="'+link+'"';
+          });
+        }
         content = content.split('\0').join('\n');
         content = new Buffer(content, 'utf-8');
         return res.type('html').status(200).size(content.length).send(content);
