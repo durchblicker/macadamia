@@ -30,20 +30,16 @@ if (require.main === module) (function() {
   var options = {
     root:__dirname+'/doc/',
     errors:{ root:__dirname+'/err/' },
-    index:[ '.md', '/index.md', '.page', '/index.page', '.html', '/index.html' ],
-    indexName:'index',
+    index:[ '.md', '/Readme.md' ],
+    indexName:'Readme',
     maxAge:0
   };
   var http = require('http');
   var app = macadamia();
   app.engine('error', loadModule('htmlerror', options));
   app.get('*.md', loadModule('noexten', options));
-  app.get('*.page', loadModule('noexten', options));
-  app.get('*.html', loadModule('noexten', options));
-  app.get(/(?:\/[^\/]+|^\/)$/, loadModule('indexfix', options));
+  app.get(/\/(?:[^\.]+)?$/, loadModule('indexfix', options));
   app.get('*.md', loadModule('markdown', options));
-  app.get('*.page', loadModule('data', options));
-  app.get('*.page', loadModule('render', options));
   app.get('**', loadModule('static', options));
   app.on('http-request', function(req, res) {
     console.log([ 'REQUEST('+makeTime(Date.now())+')'+'"'+req.url.pathname+'"', 'N/A', makeTime(res.time) , 'INIT' ].join(' - '));

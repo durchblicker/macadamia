@@ -1,4 +1,4 @@
-# [MacAdamia Module](/modules) - Index-Fix
+# [MacAdamia Module](.) - Index-Fix
 
 For matching URLs it attaches the strings in *options.index* and looks for the first file pointed to by that URL. It then rewrites the URL to point to that file.
 

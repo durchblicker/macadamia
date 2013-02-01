@@ -1,4 +1,4 @@
-# [MacAdamia Module](/modules) - HTML-Error
+# [MacAdamia Module](.) - HTML-Error
 
 This module serves static HTML-Files as error messages. It can also do different files for different HTTP-Status-Codes.
 

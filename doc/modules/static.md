@@ -1,4 +1,4 @@
-# [MacAdamia Module](/modules) - Static
+# [MacAdamia Module](.) - Static
 
 This serves static files from a base directory. It supports conditional queries (If-None-Match && If-Modified-Since) as well as byte ranges (Range).
 

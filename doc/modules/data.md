@@ -1,4 +1,4 @@
-# [MacAdamia Module](/modules) - Data
+# [MacAdamia Module](.) - Data
 
 This module loads JSON data from files in a base directory and places it in *res.data*.
 

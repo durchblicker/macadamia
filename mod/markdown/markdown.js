@@ -57,7 +57,7 @@ function setup(options) {
           return next(ex);
         }
         content = content.split(/\r?\n/).join('\0');
-        var title = content.replace(/^[\s|\S]*\<h1[^\>]*?\>([\s|\S]*?)\<\/\s*h1[\s|\S]*$/, '$1').split('\0').join('\n');
+        var title = content.replace(/^[\s|\S]*\<h1[^\>]*?\>([\s|\S]*?)\<\/\s*h1[\s|\S]*$/, '$1').replace(/\<[\s|\S]+?\>/g,'').split('\0').join('\n');
         content = [ options.markdown.before , content, options.markdown.after ].join('\0').split(/\r?\n/).join('\0');
         content = content.replace(/\$\{\s*title\s*\}/gi, title);
         content = content.split('\0').join('\n');

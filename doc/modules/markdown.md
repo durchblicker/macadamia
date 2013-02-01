@@ -1,4 +1,4 @@
-# [MacAdamia Module](/modules) - Markdown
+# [MacAdamia Module](.) - Markdown
 
 This loads Markdown files from a base directory and converts them to HTML which it serves. It supports conditional queries (If-None-Match & If-Modified-Since).
 
