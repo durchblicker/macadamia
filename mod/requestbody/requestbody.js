@@ -22,7 +22,7 @@ function setup(options) {
     var len = req.get('Content-Length') || 0;
     if (len > options.maxRequestSize) return next(new Error('Request-Size too large (>'+options.maxRequestSize+'bytes)'));
     var type = req.get('Content-Type') || 'application/octet-stream';
-    if (!Formidable && (type.indexOf('multipart/form-data') === 0)) return multipartForm.call(this, options, req, res, next);
+    if (!Formidable && (type.indexOf('multipart/form-data') === 0)) return multipartFomidable.call(this, options, req, res, next);
     if (type.indexOf('application/x-www-form-urlencoded') === 0) return urlencodedForm.call(this, options, req, res, next);
     if (type.indexOf('application/json') === 0) return jsonData.call(this, options, req, res, next);
     if (type.indexOf('text/json') === 0) return jsonData.call(this, options, req, res, next);
@@ -34,7 +34,7 @@ function urlencodedForm(options, req, res, next) {
   generalData.call(this, options, req, res, function(err) {
     if (err) return next(err);
     var formData = QUERY.parse(req.bodyString);
-    Object.defineProperty(req, 'bodyJSON', {
+    Object.defineProperty(req, 'bodyObject', {
       value:formData,
       enumerable:true,
       configurable:true
@@ -46,7 +46,7 @@ function jsonData(options, req, res, next) {
   generalData.call(this, options, req, res, function(err) {
     if (err) return next(err);
     try {
-      Object.defineProperty(req, 'bodyJSON', {
+      Object.defineProperty(req, 'bodyObject', {
         value:JSON.parse(req.bodyString),
         enumerable:true,
         configurable:true
@@ -84,7 +84,7 @@ function generalData(options, req, res, next) {
       enumerable:true,
       configurable:true
     });
-    Object.defineProperty(req, 'bodyJSON', {
+    Object.defineProperty(req, 'bodyObject', {
       value:{},
       enumerable:true,
       configurable:true
@@ -99,7 +99,7 @@ function generalData(options, req, res, next) {
   if (!Readable) req.resume();
 }
 
-function multipartForm(options, req, res, next) {
+function multipartFomidable(options, req, res, next) {
   var form = new Formidable();
   var formData = {};
   form.on('field', function(name, value) {
@@ -144,7 +144,7 @@ function multipartForm(options, req, res, next) {
       enumerable:true,
       configurable:true
     });
-    Object.defineProperty(req, 'bodyJSON', {
+    Object.defineProperty(req, 'bodyObject', {
       value:formData,
       enumerable:true,
       configurable:true

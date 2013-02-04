@@ -23,16 +23,14 @@ function setup(options) {
 
     res.set('Vary', 'Accept-Encoding');
     res.write = function(data, encoding) {
-      if (!this.headersSent) this.response.writeHead(this.statusCode);
+      if (!this.headersSent) this.writeHead(this.statusCode);
       return compressor ? compressor.write(new Buffer(data, encoding)) : write.call(res, data, encoding);
     };
     res.end = function(data, encoding) {
       if (data) this.write(data, encoding);
       return compressor ? compressor.end() : end.call(res);
     };
-    var emit = res.response.emit;
-
-    res.response.on('header', function() {
+    res.on('header', function() {
       var method;
       var accept = (req.get('accept-encoding') || '').trim();
       if (!accept.length) return;

@@ -45,9 +45,10 @@ if (require.main === module) (function() {
   };
   var http = require('http');
   var app = macadamia();
+  app.property('requestTimeout', 1000);
   app.engine('error', loadModule('htmlerror', options));
+  app.use('**', loadModule('timeout', options));
   app.post('**', loadModule('requestbody', options));
-  app.get('**', loadModule('compress', options));
   app.get('*.html', loadModule('noexten', options));
   app.get('*.md', loadModule('rewrite', {
     rewrite:{
@@ -56,6 +57,7 @@ if (require.main === module) (function() {
       ]
     }
   }));
+  app.get(/\/(?:[^\.]+)?$/, loadModule('compress', options));
   app.get(/\/(?:[^\.]+)?$/, loadModule('indexfix', options));
   app.get(/\.(?:md|markdown)/, loadModule('rewrite', {
     rewrite:{
