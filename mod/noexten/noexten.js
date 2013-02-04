@@ -11,7 +11,9 @@ function setup(options) {
   var regex = new RegExp('(?:/'+(options.indexName || 'index')+')?\\.\\S+$');
   return function(req, res, next) {
     if (!regex.exec(req.url.pathname)) return next() || console.log(regex, ' no match');
-    console.log('Rewrite: ',req.url.pathname,' ',req.url.pathname.replace(regex,''));
-    res.redirect(301, req.url.pathname.replace(regex,''));
+    var location = req.url.pathname.replace(regex,'');
+    location = location.length ? location : '/';
+    console.log('Rewrite: ',req.url.pathname,' ', location);
+    res.redirect(301, location);
   }
 }

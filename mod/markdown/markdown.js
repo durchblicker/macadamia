@@ -21,14 +21,28 @@ function setup(options) {
   if (!options.root) throw(new Error('missing options.root'));
   options.root = path.resolve(options.root);
   options.markdown = options.markdown || {};
+  options.markdown.extension = String(options.markdown.extension || '.md');
   options.markdown.before = options.markdown.before || '<html>\n  <head>\n    <title>${title}</title>\n  </head>\n  <body>';
   options.markdown.after = options.markdown.after || '  </body>\n</html>\n';
+
+  if (Array.isArray(options.markdown.fixLinks)) {
+    options.markdown.fixLinks = options.markdown.fixLinks.map(function(rule) {
+      if (!rule.search || ('string' !== typeof rule.search)) return undefined;
+      var search = (rule.search.constructor === RegExp) ? rule.search : new RegExp(String(rule.search), 'g');
+      var replace = String(rule.replace);
+      return { search:search, replace:replace };
+    }).filter(function(rule) { return rule?true:false; });
+   options.markdown.fixLinks = options.markdown.fixLinks.length ? options.markdown.fixLinks : undefined;
+  }
   return function(req, res, next) {
     var app = this;
     var filepath = path.resolve(options.root, req.url.pathname.replace(/^\/+/,''));
     if (filepath.indexOf(options.root)!==0) return next();
+    if (options.markdown.extension) filepath = filepath.replace(/\.[\S]+$/, options.markdown.extension);
+
     fs.stat(filepath, function(err, file) {
       if (err || !file || !file.isFile()) return next();
+
       file.path = filepath;
       res.set('Last-Modified',file.mtime.toUTCString());
       if (!isNaN(options.maxAge)) {
@@ -68,6 +82,14 @@ function setup(options) {
             if (link.indexOf('/') === 0) return match;
             link = req.url.pathname.slice(0, req.url.pathname.indexOf(path.basename(req.url.pathname)) - 1)+'/'+link;
             link = path.normalize(link);
+            return attr+'="'+link+'"';
+          });
+        }
+        if (Array.isArray(options.markdown.fixLinks)) {
+          content = content.replace(/(src|href)=\"([\s|\S]+?)\"/g, function(match, attr, link) {
+            options.markdown.fixLinks.forEach(function(rule) {
+              link = link.replace(rule.search, rule.replace);
+            });
             return attr+'="'+link+'"';
           });
         }

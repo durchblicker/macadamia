@@ -15,6 +15,9 @@
  * [Render](render.md)
    Simply Renders the Response-Data using a Rendering-Engine
 
+ * [Rewrite](rewrite.md)
+   Rewrite the URL
+
  * [Static](static.md)
    Serves static files.
 
