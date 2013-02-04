@@ -3,6 +3,9 @@
  * [HTML-Error](htmlerror.md)
    Serves Static HTML-Files as error responses.
 
+ * [Compress](compress.md)
+   Compress content with GZip/Deflate
+
  * [No-Exten](noexten.md)
    Removes the extensions from certain files and removes the trailing / from URLs
 

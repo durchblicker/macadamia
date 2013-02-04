@@ -1,0 +1,6 @@
+{
+  "name":"compress",
+  "version":"0.1.0",
+  "description":"Compress using Deflate/GZip",
+  "main":"./compress.js"
+}
