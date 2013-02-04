@@ -33,7 +33,10 @@ if (require.main === module) (function() {
     index:[ '.md', '/Readme.md' ],
     indexName:'Readme',
     maxAge:0,
-    markdown:{ fixIndexLinks:true }
+    markdown:{
+      fixIndexLinks:true,
+      before:'<html>\n  <head>\n    <title>${title}</title>\n    <link rel="stylesheet" type="text/css" href="/styles.css"/>\n  </head>\n  <body>'
+    }
   };
   var http = require('http');
   var app = macadamia();
@@ -43,7 +46,7 @@ if (require.main === module) (function() {
   app.get('*.md', loadModule('markdown', options));
   app.get('**', loadModule('static', options));
   app.on('http-request', function(req, res) {
-    console.log([ 'REQUEST('+makeTime(Date.now())+')'+'"'+req.url.pathname+'"', 'N/A', makeTime(res.time) , 'INIT' ].join(' - '));
+    // console.log([ 'REQUEST('+makeTime(Date.now())+')'+'"'+req.url.pathname+'"', 'N/A', makeTime(res.time) , 'INIT' ].join(' - '));
   });
   app.on('http-access', function(req, res, status, time) {
     console.log([ 'ACCESS('+makeTime(Date.now())+')', '"'+req.url.pathname+'"', status, makeTime(time) ].join(' - '));
