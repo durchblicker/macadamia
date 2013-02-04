@@ -40,11 +40,13 @@ if (require.main === module) (function() {
       fixLinks:[
         { search:'\\.md$', replace:'' }
       ]
-    }
+    },
+    compress:{ types:[ 'text/html', 'text/css', 'application/javascript' ] }
   };
   var http = require('http');
   var app = macadamia();
   app.engine('error', loadModule('htmlerror', options));
+  app.get('**', loadModule('compress', options));
   app.get('*.html', loadModule('noexten', options));
   app.get('*.md', loadModule('rewrite', {
     rewrite:{
