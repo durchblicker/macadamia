@@ -33,8 +33,9 @@ function setup(options) {
 function urlencodedForm(options, req, res, next) {
   generalData.call(this, options, req, res, function(err) {
     if (err) return next(err);
-    Object.defineProperty(req, 'form', {
-      value:QUERY.parse(req.bodyString),
+    var formData = QUERY.parse(req.bodyString);
+    Object.defineProperty(req, 'bodyJSON', {
+      value:formData,
       enumerable:true,
       configurable:true
     });
@@ -78,13 +79,18 @@ function generalData(options, req, res, next) {
       enumerable:true,
       configurable:true
     });
-    if (Readable) Object.defineProperty(req, 'bodyStream', {
-      get:function() { return Body(data); },
+    Object.defineProperty(req, 'bodyString', {
+      get:function() { return data.toString('utf-8'); },
       enumerable:true,
       configurable:true
     });
-    Object.defineProperty(req, 'bodyString', {
-      get:function() { return data.toString('utf-8'); },
+    Object.defineProperty(req, 'bodyJSON', {
+      value:{},
+      enumerable:true,
+      configurable:true
+    });
+    if (Readable) Object.defineProperty(req, 'bodyStream', {
+      get:function() { return Body(data); },
       enumerable:true,
       configurable:true
     });
@@ -128,12 +134,26 @@ function multipartForm(options, req, res, next) {
   form.on('error', function(err) { return next(err); });
   form.on('end', function() {
     if ('undefined' === typeof formData) return;
-    Object.defineProperty(req, 'form', {
+    Object.defineProperty(req, 'body', {
+      get:function() { return new Buffer(JSON.stringify(formData)); },
+      enumerable:true,
+      configurable:true
+    });
+    Object.defineProperty(req, 'bodyString', {
+      get:function() { return JSON.stringify(formData); },
+      enumerable:true,
+      configurable:true
+    });
+    Object.defineProperty(req, 'bodyJSON', {
       value:formData,
       enumerable:true,
       configurable:true
     });
-    console.error(formData);
+    if (Readable) Object.defineProperty(req, 'bodyStream', {
+      get:function() { return Body(new Buffer(JSON.stringify(formData))); },
+      enumerable:true,
+      configurable:true
+    });
     return next();
   });
   form.parse(req);
