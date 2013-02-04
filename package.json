@@ -8,5 +8,5 @@
     "mime":"*",
     "range-parser":"*"
   },
-  "engines" : { "node" : ">=0.9.3" }
+  "engines" : { "node" : ">=0.8.0" }
 }
