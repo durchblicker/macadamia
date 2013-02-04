@@ -15,20 +15,42 @@ This is the example Documentation-Server in [macadamia.js](../../macadamia.js)
     var options = {
       root:__dirname+'/doc/',
       errors:{ root:__dirname+'/err/' },
-      index:[ '.md', '/Readme.md' ],
+      index:[ '.html', '/index.html', '.md', '/Readme.md' ],
       indexName:'Readme',
       maxAge:0,
-      markdown:{ fixIndexLinks:true }
+      markdown:{
+        fixIndexLinks:true,
+        before:'<html>\n  <head>\n    <title>${title}</title>\n    <link rel="stylesheet" type="text/css" href="/styles.css"/>\n  </head>\n  <body>',
+        extension:'.md',
+        fixLinks:[
+          { search:'\\.md$', replace:'' }
+        ]
+      }
     };
     var http = require('http');
     var app = macadamia();
     app.engine('error', loadModule('htmlerror', options));
-    app.get('*.md', loadModule('noexten', options));
+    app.get('*.html', loadModule('noexten', options));
+    app.get('*.md', loadModule('rewrite', {
+      rewrite:{
+        rules:[
+          { search:'\\.md$', replace:'.markdown' }
+        ]
+      }
+    }));
     app.get(/\/(?:[^\.]+)?$/, loadModule('indexfix', options));
-    app.get('*.md', loadModule('markdown', options));
+    app.get(/\.(?:md|markdown)/, loadModule('rewrite', {
+      rewrite:{
+        rules:[
+          { search:'\\.md$', replace:'.html' },
+          { search:'\\.markdown', replace:'.md' }
+        ]
+      }
+    }));
+    app.get('*.html', loadModule('markdown', options));
     app.get('**', loadModule('static', options));
     app.on('http-request', function(req, res) {
-      console.log([ 'REQUEST('+makeTime(Date.now())+')'+'"'+req.url.pathname+'"', 'N/A', makeTime(res.time) , 'INIT' ].join(' - '));
+      // console.log([ 'REQUEST('+makeTime(Date.now())+')'+'"'+req.url.pathname+'"', 'N/A', makeTime(res.time) , 'INIT' ].join(' - '));
     });
     app.on('http-access', function(req, res, status, time) {
       console.log([ 'ACCESS('+makeTime(Date.now())+')', '"'+req.url.pathname+'"', status, makeTime(time) ].join(' - '));
