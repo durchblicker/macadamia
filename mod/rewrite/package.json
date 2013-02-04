@@ -1,0 +1,6 @@
+{
+  "name":"rewrite",
+  "version":"0.1.0",
+  "description":"Regex URL Rewrite",
+  "main":"./rewrite.js"
+}
