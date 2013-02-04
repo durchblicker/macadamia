@@ -36,7 +36,7 @@ function setup(options) {
   }
   return function(req, res, next) {
     var app = this;
-    var filepath = path.resolve(options.root, req.url.pathname.replace(/^\/+/,''));
+    var filepath = path.resolve(options.root, req.URL.pathname.replace(/^\/+/,''));
     if (filepath.indexOf(options.root)!==0) return next();
     if (options.markdown.extension) filepath = filepath.replace(/\.[\S]+$/, options.markdown.extension);
 
@@ -80,7 +80,7 @@ function setup(options) {
           content = content.replace(/(src|href)=\"([\s|\S]+?)\"/g, function(match, attr, link) {
             if (/\w\:\/\//.exec(link)) return match;
             if (link.indexOf('/') === 0) return match;
-            link = req.url.pathname.slice(0, req.url.pathname.indexOf(path.basename(req.url.pathname)) - 1)+'/'+link;
+            link = req.URL.pathname.slice(0, req.URL.pathname.indexOf(path.basename(req.URL.pathname)) - 1)+'/'+link;
             link = path.normalize(link);
             return attr+'="'+link+'"';
           });

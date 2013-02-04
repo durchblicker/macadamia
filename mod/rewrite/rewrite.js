@@ -23,7 +23,7 @@ function setup(options) {
     if (!options.root) throw(new Error('missing options.root'));
   }
   return function(req, res, next) {
-    var result = req.path;
+    var result = req.URL.pathname;
     options.rewrite.rules.forEach(function(rule) {
       result = result.replace(rule.search, rule.replace);
     });
@@ -34,7 +34,7 @@ function setup(options) {
         if (options.rewrite.redirect) {
           res.redirect((isNaN(options.rewrite.redirect)?301:options.rewrite.redirect), result);
         } else {
-          req.url.pathname = result;
+          req.URL.pathname = result;
           next();
         }
       });
@@ -42,7 +42,7 @@ function setup(options) {
     if (options.rewrite.redirect) {
       res.redirect((isNaN(options.rewrite.redirect)?301:options.rewrite.redirect), result);
     } else {
-      req.url.pathname = result;
+      req.URL.pathname = result;
       next();
     }
   };

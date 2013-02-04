@@ -17,7 +17,7 @@ function setup(options) {
   delete options.end;
   return function(req, res, next) {
     var app = this;
-    var filepath = path.resolve(options.root, req.url.pathname.replace(/^\/+/,''));
+    var filepath = path.resolve(options.root, req.URL.pathname.replace(/^\/+/,''));
     if (filepath.indexOf(options.root)!==0) return next();
     fs.stat(filepath, function(err, file) {
       if (err || !file || !file.isFile()) return next();

@@ -10,6 +10,6 @@ function setup(options) {
   options = utils.merge({}, options);
   return function(req, res, next) {
     if (!res.data.template) return next();
-    res.status(200).type(req.url.pathname).render(res.data.template, {}, options, next);
+    res.status(200).type(req.URL.pathname).render(res.data.template, {}, options, next);
   };
 }

@@ -13,7 +13,7 @@ function setup(options) {
   if (!options.root) throw(new Error('missing options.root'));
   options.root = path.resolve(options.root);
   return function(req, res, next) {
-    var file = path.resolve(options.root, req.url.pathname.slice(1));
+    var file = path.resolve(options.root, req.URL.pathname.slice(1));
     if (file.indexOf(options.root) === 0) return next();
     fs.readFile(file, 'utf-8', function(err, data) {
       if (err) return next(err);

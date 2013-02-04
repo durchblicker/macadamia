@@ -10,10 +10,10 @@ function setup(options) {
   options = utils.merge({}, options);
   var regex = new RegExp('(?:/'+(options.indexName || 'index')+')?\\.\\S+$');
   return function(req, res, next) {
-    if (!regex.exec(req.url.pathname)) return next() || console.log(regex, ' no match');
-    var location = req.url.pathname.replace(regex,'');
+    if (!regex.exec(req.URL.pathname)) return next() || console.log(regex, ' no match');
+    var location = req.URL.pathname.replace(regex,'');
     location = location.length ? location : '/';
-    console.log('Rewrite: ',req.url.pathname,' ', location);
+    console.log('Rewrite: ',req.URL.pathname,' ', location);
     res.redirect(301, location);
   }
 }

@@ -72,10 +72,10 @@ if (require.main === module) (function() {
     // console.log([ 'REQUEST('+makeTime(Date.now())+')'+'"'+req.url.pathname+'"', 'N/A', makeTime(res.time) , 'INIT' ].join(' - '));
   });
   app.on('http-access', function(req, res, status, time) {
-    console.log([ 'ACCESS('+makeTime(Date.now())+')', '"'+req.url.pathname+'"', status, makeTime(time) ].join(' - '));
+    console.log([ 'ACCESS('+makeTime(Date.now())+')', '"'+req.url+'"', status, makeTime(time) ].join(' - '));
   });
   app.on('http-error', function(err, req, res, status, time) {
-    console.log('ERROR('+makeTime(Date.now())+')'+[ '"'+req.url.pathname+'"', status, makeTime(time) , err ? err.message : (http.STATUS_CODES[status] || 'N/A') ].join(' - '));
+    console.log('ERROR('+makeTime(Date.now())+')'+[ '"'+req.url+'"', status, makeTime(time) , err ? err.message : (http.STATUS_CODES[status] || 'N/A') ].join(' - '));
   });
   var server = http.createServer(app.handle);
   server.listen(1234);

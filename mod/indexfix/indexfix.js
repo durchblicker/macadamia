@@ -14,16 +14,16 @@ function setup(options) {
   options.root = path.resolve(options.root);
   options.index = options.index || [ '.html' ,'/index.html' ];
   return function(req, res, next) {
-    if ((req.url.pathname[req.url.pathname.length - 1] === '/') && (req.url.pathname.length > 1)) return res.redirect(301, req.url.pathname.replace(/\/+$/,''));
-    if (path.extname(req.url.pathname).length) return next();
+    if ((req.URL.pathname[req.URL.pathname.length - 1] === '/') && (req.URL.pathname.length > 1)) return res.redirect(301, req.URL.pathname.replace(/\/+$/,''));
+    if (path.extname(req.URL.pathname).length) return next();
     var paths = options.index.map(function(item) {
-      return path.resolve(options.root, [ req.url.pathname, item ].join('').replace(/^\/+/,''));
+      return path.resolve(options.root, [ req.URL.pathname, item ].join('').replace(/^\/+/,''));
     }).filter(function(item) {
       return item.indexOf(options.root)===0;
     });
     utils.findFile(paths, function(err, stat) {
       if (err || !stat) return next();
-      req.url.pathname = '/'+path.relative(options.root, stat.path);
+      req.URL.pathname = '/'+path.relative(options.root, stat.path);
       next();
     });
   }
