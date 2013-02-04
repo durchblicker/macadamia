@@ -1,3 +1,3 @@
 # MacAdamia HTML-Error Files
 
-See: modules/htmlerror.md in the documentation folder
+See: [Documentation](../doc/modules/htmlerror.md)

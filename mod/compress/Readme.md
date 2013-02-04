@@ -1,3 +1,3 @@
 # MacAdamia Compress
 
-See: modules/compress.md in the documentation folder
+See: [Documentation](../doc/modules/compress.md)

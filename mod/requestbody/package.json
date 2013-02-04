@@ -1,0 +1,6 @@
+{
+  "name":"requestbody",
+  "version":"0.1.0",
+  "description":"Standard Request Body Parser",
+  "main":"./requestbody.js"
+}

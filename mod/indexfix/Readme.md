@@ -1,3 +1,3 @@
 # MacAdamia IndexFix
 
-See: modules/indexfix.md in the documentation folder
+See: [Documentation](../doc/modules/indexfix.md)

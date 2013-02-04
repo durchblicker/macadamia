@@ -1,3 +1,3 @@
 # MacAdamia NoExten
 
-See: modules/noexten.md in the documentation folder
+See: [Documentation](../doc/modules/noexten.md)

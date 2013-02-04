@@ -1,3 +1,3 @@
 # MacAdamia Render
 
-See: modules/render.md in the documentation folder
+See: [Documentation](../doc/modules/render.md)
