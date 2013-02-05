@@ -10,25 +10,37 @@ var path = require('path');
 function setup(options) {
   options = macadamia.merge({}, options);
   options.includeKey = options.includeKey;
-  if (!options.root) throw(new Error('options.root is missing'));
-  options.root = path.resolve(options.root)+'/';
+  if (!options.root && (options.include || options.includeKey)) {
+    throw(new Error('options.root is missing'));
+  } else {
+    options.root = path.resolve(options.root)+'/';
+  }
+  options.includeData = options.includeData || {};
   return function(req, res, next) {
-    var data = res.data;
+    var data = macadamia.merge(res.data, options.includeData);
     var include = options.includeKey ? data[options.includeKey] : options.include;
-    if ('object' === typeof include) {
-      if (null === include) {
+    switch (typeof include) {
+      case 'undefined':
         include = [];
-      } else if (Array.isArray()) {
-        include = include.map(function(file) {
-          return { key:undefined, path:String(file) };
-        });
-      } else {
-        include = Object.keys(include).map(function(key) {
-          return { key:key, path:String(include[key]) };
-        });
-      }
-    } else {
-      include = [ { key:undefined, path:String(include)  } ];
+        break;
+      case 'object':
+        if (null === include) include = []; break;
+        if (Array.isArray()) {
+          include = include.map(function(file) {
+            return { key:undefined, path:String(file) };
+          });
+        } else {
+          include = Object.keys(include).map(function(key) {
+            return { key:key, path:String(include[key]) };
+          });
+        }
+        break;
+      default:
+        include = [ String(include) ];
+    }
+    if (!include.length) {
+      res.data = data;
+      return next();
     }
     var base = path.resolve(options.root, req.path);
     include = include.map(function(include) {
