@@ -48,13 +48,11 @@ This is the basic function to setup a route.
 
 ### Route Syntax
 
-## app.handle(name[, value])
+## app.handle(request, resspone[, next])
 
-This is the actual handler function of your app. You can also do:
+This is the actual handler function of your app. You can also do: `server.on('request', app.handle);` in order to attach your app to a server.
 
-    server.on('request', app.handle);
-
-in order to attach your app to a server.
+Of course you culd also chain apps if you pass in a *next* callback. This way it is an [Express](http://expressjs.com) handler as well and cann be combined with other macadamia servers or connect as well.
 
 ## app.render(selector, data[, options], callback)
 
