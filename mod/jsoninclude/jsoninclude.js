@@ -1,5 +1,5 @@
 /*
-** © 2013 by YOUSURE Tarifvergleich GmbH. All rights reserved.
+** © 2013 by Philipp Dunkel <p.dunkel@me.com>. Licensed under MIT License.
 */
 
 module.exports = setup;
@@ -8,14 +8,12 @@ var macadamia = require('macadamia');
 var path = require('path');
 
 function setup(options) {
-  options = macadamia.merge({}, options);
-  options.includeKey = options.includeKey;
+  options = macadamia.merge({ includeData:{} }, options);
   if (!options.root && (options.include || options.includeKey)) {
     throw(new Error('options.root is missing'));
   } else {
     options.root = path.resolve(options.root)+'/';
   }
-  options.includeData = options.includeData || {};
   return function(req, res, next) {
     var data = macadamia.merge(res.data, options.includeData);
     var include = options.includeKey ? data[options.includeKey] : options.include;
