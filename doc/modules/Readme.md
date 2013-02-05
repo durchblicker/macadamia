@@ -13,7 +13,10 @@
    Looks for index files in directories
 
  * [Data](data.md)
-   Loads JSON Files into the Response-Data so that it can then be rendered
+   Loads JSON File pointed to by the URL into the Response-Data so that it can then be rendered
+
+ * [JSON Include](jsoninclude.md)
+   Includes Files into the Response-Data independant (more or less) of the URL
 
  * [Render](render.md)
    Simply Renders the Response-Data using a Rendering-Engine
