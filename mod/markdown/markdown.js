@@ -94,6 +94,10 @@ function setup(options) {
           });
         }
         content = content.split('\0').join('\n');
+        if (options.markdown.dataKey) {
+          res.data[options.markdown.dataKey] = content;
+          return next();
+        }
         content = new Buffer(content, 'utf-8');
         return res.type('html').status(200).size(content.length).send(content);
       });

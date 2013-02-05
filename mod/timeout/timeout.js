@@ -15,9 +15,11 @@ function setup(options) {
     var timeout = setTimeout(function() {
       req.error(503, 'Request Timeout');
     }, options.timeout);
-    res.on('header', function() {
+    function clear() {
       timeout=clearTimeout(timeout);
-    });
+    }
+    res.on('header', clear);
+    res.on('done', clear);
     next();
   };
 }

@@ -13,10 +13,8 @@ function setup(options) {
   options.rewrite = options.rewrite || {};
   if (!Array.isArray(options.rewrite.rules)) throw(new Error('options.rewrite.rules must be an array'));
   options.rewrite.rules = options.rewrite.rules.map(function(rule) {
-    return {
-      search:new RegExp(rule.search || '^([\\s|\\S]*)$', 'g'),
-      replace:String(rule.replace || '$1')
-    };
+    var search = (search instanceof RegExp) ? search : new RegExp(String(rule.search || '^([\\s|\\S]*)$'), 'g'),
+    return { search:search, replace:String(rule.replace || '$1') };
   });
   if (options.rewrite.checkTarget) {
     options.root = path.resolve(options.root);

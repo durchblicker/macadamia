@@ -8,14 +8,16 @@ var macadamia = require('macadamia');
 var path = require('path');
 
 function setup(options) {
-  options = macadamia.merge({ includeData:{} }, options);
+  options = macadamia.merge({ includeData:{}, defaultData:{} }, options);
   if (!options.root && (options.include || options.includeKey)) {
     throw(new Error('options.root is missing'));
   } else {
     options.root = path.resolve(options.root)+'/';
   }
   return function(req, res, next) {
-    var data = macadamia.merge(res.data, options.includeData);
+    var data = res.data;
+    data = macadamia.merge(options.defaultData, data);
+    data = macadamia.merge(data, options.includeData);
     var include = options.includeKey ? data[options.includeKey] : options.include;
     switch (typeof include) {
       case 'undefined':
