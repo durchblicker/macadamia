@@ -5,7 +5,7 @@
 module.exports = setup;
 
 var zlib = require('zlib');
-var utils = require('../../lib/utils.js');
+var MacadamiaResponse = require('../../lib/response.js').MacadamiaResponse;
 
 var compressors = {
   gzip:zlib.createGzip,
@@ -13,41 +13,45 @@ var compressors = {
 };
 
 function setup(options) {
-  options = utils.merge({}, options);
-  options.compress = options.compress || {};
-  return function(req, res, next) {
-    var app = this;
-    var compressor;
-    var write = res.write;
-    var end = res.end;
-
-    res.set('Vary', 'Accept-Encoding');
-    res.write = function(data, encoding) {
-      if (!this.headersSent) this.writeHead(this.statusCode);
-      return compressor ? compressor.write(new Buffer(data, encoding)) : write.call(res, data, encoding);
-    };
-    res.end = function(data, encoding) {
-      if (data) this.write(data, encoding);
-      return compressor ? compressor.end() : end.call(res);
-    };
-    res.on('header', function() {
-      var method;
-      var accept = (req.get('accept-encoding') || '').trim();
-      if (!accept.length) return;
-      if (req.method === 'HEAD') return;
-      if ((res.get('Content-Encoding') || 'identity') !== 'identity') return;
-      if (Array.isArray(options.compress.types) && options.compress.types.indexOf((res.get('Content-Type')||'').split(';').shift()) === -1) return;
-      if (accept == '*') accept = 'gzip';
-      method = Object.keys(compressors).filter(function(method) { return accept.indexOf(method) > -1; }).shift();
-      if (!method) return;
-      compressor = compressors[method](options.compress);
-      res.set('Content-Encoding', method);
-      res.set('Content-Length', null);
-
-      compressor.on('data', function(data){ write.call(res, data); });
-      compressor.on('end', function(){ end.call(res); });
-      compressor.on('drain', function() { res.emit('drain'); });
+  var types = [
+    'application/javascript',
+    'application/json',
+    'text/'
+  ];
+  function isCompressable(req, res) {
+    if ((res.get('content-encoding') || 'identity') !== 'identity') return false;
+    var mime = res.get('Content-Type');
+    if (!types.filter(function(type) {
+      if ('string' === typeof type) return (mime.substr(0, type.length) === type);
+      if (type instanceof RegExp) return type.exec(mime);
+      return false;
+    }).length) return false;
+    var accept = (req.get('accept-encoding') || '').trim();
+    accept = (('*' === accept) ? 'gzip' : accept).split(/\s*,\s*/);
+    accept = Object.keys(compressors).filter(function(method) { return accept.indexOf(method) > -1; }).shift();
+    if (!accept || !accept.length) return false;
+    return accept;
+  }
+  function handler(req, res, callback) {
+    res.add('Vary','Accept-Encoding');
+    if (req.method === 'HEAD') return callback();
+    res.on('headers', function() {
+      var method = isCompressable(req, res);
+      if (method) {
+        res.set('Content-Encoding', method);
+        res.size('n/a');
+        var compressor = compressors[method]();
+        compressor.toString = string.bind(compressor, method);
+        res.transformer.push(compressor);
+      }
     });
-    next();
-  };
+    callback(undefined, req, res);
+  }
+  return handler;
 }
+function string(method) {
+  return '[ object '+(method==='deflate'?'Deflate':'GZip')+' ]';
+}
+
+
+

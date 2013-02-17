@@ -4,7 +4,7 @@
 
 module.exports = setup;
 
-var macadamia = require('macadamia');
+var macadamia = require('../../macadamia.js');
 var path = require('path');
 
 function setup(options) {

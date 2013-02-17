@@ -4,19 +4,18 @@
 
 module.exports = setup;
 
+var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var utils = require('../../lib/utils.js');
 var parseRange = require('range-parser');
 
 function setup(options) {
-  options = utils.merge({}, options);
-  if (!options.root) throw(new Error('missing options.root'));
+  options = this.merge({}, options);
+  assert(!!options.root, 'missing options.root');
   options.root = path.resolve(options.root);
   delete options.start;
   delete options.end;
   return function(req, res, next) {
-    var app = this;
     var filepath = path.resolve(options.root, req.URL.pathname.replace(/^\/+/,''));
     if (filepath.indexOf(options.root)!==0) return next();
     fs.stat(filepath, function(err, file) {
@@ -31,11 +30,11 @@ function setup(options) {
       if ('object' === typeof options.headers) {
         Object.keys(options.headers).forEach(function(header) {
           if ('function' === typeof options.headers[header]) {
-            options.headers[header].call(app, req, res);
+            options.headers[header].call(this, req, res);
           } else {
             res.set(header, options.headers[header]);
           }
-        });
+        }.bind(this));
       }
       var etag = getETag(file, req);
       var modified = getModified(file, req);
@@ -54,7 +53,7 @@ function setup(options) {
         res.status(200);
       }
       res.type(file.path).size(length).sendfile(file.path, options, next);
-    });
+    }.bind(this));
   };
 }
 
