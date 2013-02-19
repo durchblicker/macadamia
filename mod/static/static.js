@@ -9,17 +9,21 @@ var fs = require('fs');
 var path = require('path');
 var parseRange = require('range-parser');
 
-function setup(options) {
-  options = this.merge({}, options);
-  assert(!!options.root, 'missing options.root');
-  options.root = path.resolve(options.root);
-  delete options.start;
-  delete options.end;
+function setup(opts) {
+  opts = this.merge({}, opts);
+  assert(!!opts.root, 'missing opts.root');
+  opts.root = path.resolve(opts.root);
+  delete opts.start;
+  delete opts.end;
   return function(req, res, next) {
+    var options = this.merge({}, opts);
+    if ([ 'HEAD', 'GET' ].indexOf(req.method) < 0) return next();
     var filepath = path.resolve(options.root, req.URL.pathname.replace(/^\/+/,''));
     if (filepath.indexOf(options.root)!==0) return next();
     fs.stat(filepath, function(err, file) {
+
       if (err || !file || !file.isFile()) return next();
+
       file.path = filepath;
       res.set('Last-Modified',file.mtime.toUTCString());
       res.set('Accept-Ranges', 'bytes');
@@ -52,7 +56,12 @@ function setup(options) {
       } else {
         res.status(200);
       }
-      res.type(file.path).size(length).sendfile(file.path, options, next);
+      res.type(file.path).size(length);
+      if (req.method==='HEAD') {
+        res.end();
+        return next();
+      }
+      res.sendfile(file.path, options, next);
     }.bind(this));
   };
 }

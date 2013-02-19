@@ -4,12 +4,10 @@
 
 module.exports = setup;
 
-var utils = require('../../lib/utils.js');
-
 function setup(options) {
-  options = utils.merge({}, options);
+  options = this.merge({}, options);
   return function(req, res, next) {
     if (!res.data.template) return next();
-    res.status(200).type(options.renderType || req.URL.pathname).render(res.data.template || req.path, {}, options, next);
+    res.status(200).type(options.type || req.URL.pathname).render(res.data.template || req.path, {}, options, next);
   };
 }
