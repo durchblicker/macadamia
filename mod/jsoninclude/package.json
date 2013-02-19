@@ -1,6 +1,0 @@
-{
-  "name":"jsoninclude",
-  "description":"include JSON Files into res.data",
-  "version":"0.0.0",
-  "main":"jsoninclude.js"
-}

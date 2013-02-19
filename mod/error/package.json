@@ -1,0 +1,6 @@
+{
+  "name":"htmlerror",
+  "version":"0.1.0",
+  "description":"recover errors to serve",
+  "main":"./error.js"
+}

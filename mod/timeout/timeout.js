@@ -4,22 +4,14 @@
 
 module.exports = setup;
 
-var utils = require('../../lib/utils.js');
-
-
 function setup(options) {
-  options = utils.merge({}, options);
+  options = this.merge({}, options);
   options.timeout = isNaN(options.timeout) ? 5000 : options.timeout;
-  return timeout;
-  function timeout(req, res, next) {
-    var timeout = setTimeout(function() {
-      req.error(503, 'Request Timeout');
+
+  function timeout(req, res, callback) {
+    setTimeout(function() {
+      if (!res.headersSent) res.status(503, 'Request Timeout').type('text').send('Request Timeout');
     }, options.timeout);
-    function clear() {
-      timeout=clearTimeout(timeout);
-    }
-    res.on('header', clear);
-    res.on('done', clear);
-    next();
+    callback();
   };
 }

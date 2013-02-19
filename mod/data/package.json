@@ -1,6 +1,6 @@
 {
   "name":"data",
-  "version":"0.1.0",
-  "description":"loads a static file into res.data",
-  "main":"./data.js"
+  "description":"include JSON (and Text) Files into res.data",
+  "version":"0.0.0",
+  "main":"data.js"
 }

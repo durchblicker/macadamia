@@ -1,3 +1,3 @@
-# MacAdamia Data
+# MacAdamia JSONInclude
 
-See: [Documentation](../doc/modules/data.md)
+See: [Documentation](../doc/modules/jsoninclude.md)
