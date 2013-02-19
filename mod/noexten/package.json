@@ -1,6 +1,0 @@
-{
-  "name":"noexten",
-  "version":"0.1.0",
-  "description":"removes extensions from urls via redirect",
-  "main":"./noexten.js"
-}
