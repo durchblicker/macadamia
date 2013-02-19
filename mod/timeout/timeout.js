@@ -10,7 +10,9 @@ function setup(options) {
 
   function timeout(req, res, callback) {
     setTimeout(function() {
-      if (!res.headersSent) res.status(503, 'Request Timeout').type('text').send('Request Timeout');
+      var err = new Error('Request Timeout');
+      err.status = 503;
+      req.nextCallback(err);
     }, options.timeout);
     callback();
   };
