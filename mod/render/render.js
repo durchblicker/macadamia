@@ -6,8 +6,8 @@ module.exports = setup;
 
 function setup(options) {
   options = this.merge({}, options);
-  return function(req, res, next) {
-    if (!res.data.template) return next();
-    res.status(200).type(options.type || req.URL.pathname).render(res.data.template || req.path, {}, options, next);
+  return function(req, res, callback) {
+    if (!res.data.template) return callback();
+    res.status(200).type(options.type || req.URL.pathname).render(res.data.template || req.path, {}, options, callback);
   };
 }

@@ -4,8 +4,9 @@
 
 module.exports = setup;
 
-var macadamia = require('../../macadamia.js');
+var fs = require('fs');
 var path = require('path');
+var assert = require('assert');
 
 function setup(options) {
   options = this.merge({ includeData:{}, defaultData:{} }, options);
@@ -15,7 +16,7 @@ function setup(options) {
   return function(req, res, callback) {
     var data = res.data;
     data = this.merge(data, options.data);
-    (options.url ? loadFile.bind(this, options.root, req.url.pathname.substr(1), null) : setImmediate)(function(err, base) {
+    (options.url ? loadFile.bind(this, options.root, req.URL.pathname.substr(1), null) : setImmediate)(function(err, base) {
       if (err) return callback(err);
       data = this.merge(data, base || {});
       var include = options.fileKey ? data[options.fileKey] : options.file;

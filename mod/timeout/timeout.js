@@ -8,7 +8,7 @@ function setup(options) {
   options = this.merge({}, options);
   options.timeout = isNaN(options.timeout) ? 5000 : options.timeout;
 
-  function timeout(req, res, callback) {
+  return function timeout(req, res, callback) {
     setTimeout(function() {
       var err = new Error('Request Timeout');
       err.status = 503;
