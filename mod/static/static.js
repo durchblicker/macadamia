@@ -49,8 +49,8 @@ function setup(opts) {
       if(-1 === ranges) return res.status(416).size().set('Content-Range', 'bytes */' + file.size).end();
       if(-2 !== ranges) {
         ranges = ranges.shift();
-        options.start = ranges[0].start;
-        options.end = ranges[0].end;
+        options.start = ranges.start;
+        options.end = ranges.end;
         res.status(206).set('Content-Range', 'bytes ' + ranges.start + '-' + ranges.end + '/' + file.size);
         length = options.end - options.start + 1;
       } else {
