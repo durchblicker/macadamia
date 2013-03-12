@@ -1,6 +1,6 @@
 {
   "name":"macadamia",
-  "version":"0.2.0",
+  "version":"0.2.1",
   "description":"A web-service router like express",
   "main":"./macadamia.js",
   "dependencies":{
