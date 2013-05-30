@@ -1,0 +1,6 @@
+{
+  "name":"error",
+  "version":"0.1.0",
+  "description":"Error Handling for Macadamia",
+  "main":"error.js"
+}

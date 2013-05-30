@@ -1,0 +1,6 @@
+{
+  "name":"jsonrequest",
+  "version":"0.1.0",
+  "description":"JSON-Request-Body-Parser for Macadamia",
+  "main":"jsonrequest.js"
+}

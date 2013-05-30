@@ -1,0 +1,9 @@
+{
+  "name":"urlformrequest",
+  "version":"0.1.0",
+  "description":"URLEncoded Body-Parser for Macadamia",
+  "main":"urlformrequest.js",
+  "dependencies":{
+    "qs":"*"
+  }
+}

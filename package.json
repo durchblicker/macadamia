@@ -1,12 +1,20 @@
 {
   "name":"macadamia",
-  "version":"0.2.1",
-  "description":"A web-service router like express",
-  "main":"./macadamia.js",
-  "dependencies":{
-    "async":"*",
-    "mime":"*",
-    "range-parser":"*"
+  "version":"0.3.0",
+  "description":"a simple even more unoppinionated replacement for express",
+  "main":"macadamia.js",
+  "author":{
+    "name" : "Philipp Dunkel",
+    "email" : "phidelta@phideltacity.net",
+    "url" : "https://github.com/phidelta/"
   },
-  "engines" : { "node" : ">=0.9.8" }
+  "repository" : {
+    "type": "git",
+    "url": "https://github.com/phidelta/macadamia.git"
+  },
+  "dependencies":{
+    "pea":"*",
+    "merge":"*",
+    "qs":"*"
+  }
 }

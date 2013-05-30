@@ -1,6 +1,0 @@
-{
-  "name":"static",
-  "version":"0.1.0",
-  "description":"Serve Static Files",
-  "main":"./static.js"
-}

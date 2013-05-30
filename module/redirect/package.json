@@ -1,0 +1,6 @@
+{
+  "name":"redirect",
+  "version":"0.1.0",
+  "description":"URL Redirecting for Macadamia",
+  "main":"redirect.js"
+}

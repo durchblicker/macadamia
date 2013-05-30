@@ -1,0 +1,6 @@
+{
+  "name":"static",
+  "version":"0.1.0",
+  "description":"Static File-Serving for Macadamia",
+  "main":"static.js"
+}

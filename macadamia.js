@@ -1,79 +1,36 @@
 /*
-** © 2013 by Philipp Dunkel <p.dunkel@me.com>. Licensed under MIT-License.
+** © 2013 by Philipp Dunkel <p.dunkel@me.com>. Licensed under MIT License.
 */
 
-var macadamia = module.exports = require('./lib/app.js');
-module.exports.MacadamiaRequest = require('./lib/request.js').MacadamiaRequest;
-module.exports.MacadamiaResponse = require('./lib/response.js').MacadamiaResponse;
-module.exports.module = loadModule;
+module.exports = require('./lib/app.js');
+module.exports.module = getModule;
+module.exports.parseAge = parseAge;
 
-function loadModule(name, options) {
-  var mod = require('./mod/' + name);
-  return mod.call(module.exports, options);
+function getModule(id) {
+  return require('./module/' + id);
 }
 
-if(require.main === module)(function() {
-  var options = {
-    root: __dirname + '/doc/',
-    maxAge: 0
-  };
-
-  var app = module.exports();
-  app.get(/\/[\s|\S]+\/$/, macadamia.module('rewrite', {
-    redirect: 301,
-    rules: [{
-      search: /\/$/,
-      replace: ''
-    }]
-  }));
-  app.get(/\/[^\.]+$/, macadamia.module('rewrite', {
-    rules: [{
-      search: /^([\s|\S]+)$/,
-      replace: '$1.md'
-    }],
-    checkTarget: true,
-    root: __dirname + '/doc/'
-  }));
-  app.get(/\/[^\.]+$/, macadamia.module('rewrite', {
-    rules: [{
-      search: /^([\s|\S]+)$/,
-      replace: '$1/Readme.md'
-    }],
-    checkTarget: true,
-    root: __dirname + '/doc/'
-  }));
-  app.get(/^\/$/, macadamia.module('rewrite', {
-    rules: [{
-      replace: '/Readme.md'
-    }],
-    checkTarget: true,
-    root: __dirname + '/doc/'
-  }));
-  app.get('**', macadamia.module('static', options));
-  app.listen(1234);
-  app.on('request', log.bind(app, 'request'));
-  app.on('finish', log.bind(app, 'finish'));
-  app.on('error', log.bind(app, 'error'));
-  app.on('trace', trace.bind(app, 'trace'));
-
-  function makeTime(milli) {
-    milli = milli / 1e6;
-    var d = new Date(milli);
-    return [
-    [
-    ('00' + d.getUTCHours()).slice(-2), ('00' + d.getUTCMinutes()).slice(-2), ('00' + d.getUTCSeconds()).slice(-2)].join(':'), ('000' + d.getUTCMilliseconds()).slice(-3)].join('.');
+function parseAge(str) {
+  if(!isNaN(str)) return str;
+  str = String(str || '1 day').toLowerCase().split(/\s+/);
+  str[0] = str[0].trim();
+  if(str[0].indexOf('/') > -1) {
+    str[0] = str[0].split('/');
+    str[0] = String(parseInt(str[0][0], 10) / parseInt(str[0][1], 10));
   }
-
-  function log(event, req, res, err) {
-    var args = [
-    (event + '       ').substr(0, 7), ('000' + (res.statusCode || '')).substr(-3),
-    req.url,
-    makeTime(res.time)];
-    if(err) args.push(err.message);
-    console.log(args.join(' - '));
-  }
-
-  function trace(msg, loc) {
-    console.error.apply(console, [msg + '(' + loc + ')'].concat(Array.prototype.slice.call(arguments, 2)));
-  }
-}());
+  var count = parseFloat(str[0], 10);
+  count = isNaN(count) ? 1 : count;
+  var unit = str[1].trim().replace(/s$/, '');
+  unit = parseAge[unit] || 0;
+  unit = isNaN(unit) ? 0 : unit;
+  return Math.round(count * unit);
+}
+parseAge['millisecond'] = 1;
+parseAge['second'] = 1000 * parseAge['millisecond'];
+parseAge['minute'] = 60 * parseAge['second'];
+parseAge['hour'] = 60 * parseAge['minute'];
+parseAge['day'] = 24 * parseAge['hour'];
+parseAge['week'] = 7 * parseAge['day'];
+parseAge['month'] = 30 * parseAge['day'];
+parseAge['quarter'] = 3 * parseAge['month'];
+parseAge['year'] = 364.25 * parseAge['day'];

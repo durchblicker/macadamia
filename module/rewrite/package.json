@@ -1,0 +1,6 @@
+{
+  "name":"rewrite",
+  "version":"0.1.0",
+  "description":"URL-Rewriting for Macadamia",
+  "main":"rewrite.js"
+}

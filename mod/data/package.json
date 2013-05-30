@@ -1,6 +1,0 @@
-{
-  "name":"data",
-  "description":"include JSON (and Text) Files into res.data",
-  "version":"0.0.0",
-  "main":"data.js"
-}
