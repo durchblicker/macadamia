@@ -20,6 +20,225 @@ Macadamia is a slightly more opinionated than [Express](http://expressjs.com). E
     // function handler(req, res, callback) { … }
     // function route_match(string) { return <true|false> }
 
+### Macadamia.App Object
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### App (constructor)
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.routes
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.main
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.locals
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.route
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.handle
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.engine
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.render
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.set
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.get
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.enable
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.disable
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.enabled
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.disabled
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### app.listen
+
+**TODO:** write documentation. *(look in code for now)*
+
+### Alterations to HTTP-Request
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.URL
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.query
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.cookies
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.header
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.get
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.is
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.ip
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.ips
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.path
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.protocol
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.secure
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.param
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### req.body
+
+**TODO:** write documentation. *(look in code for now)*
+
+### Alterations to HTTP-Response
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.locals
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.status
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.size
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.type
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.header
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.set
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.get
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.redirect
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.location
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.send
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.json
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.attachment
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.download
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.sendfile
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.links
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.cookie
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### res.render
+
+**TODO:** write documentation. *(look in code for now)*
+
+### Macadamia.Route Object
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### Route (constructor)
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### route.name
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### route.method
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### route.url
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### route.handler
+
+**TODO:** write documentation. *(look in code for now)*
+
+#### route.handle
+
+**TODO:** write documentation. *(look in code for now)*
 
 ### Modules
 
@@ -86,11 +305,6 @@ Either triggers an error if *trigger* is set or renders the error out if not.
  * *view* : this is the view to use to render the error (default: error)
  * *mimeType* : the mime-type the rendered error should have (default: text/html; charset=UTF-8)
 
-### Macadamia.App Object
-### Alterations to HTTP-Request
-### Alterations to HTTP-Response
-### Macadamia.Route Object
-
 ## License
 
 (The MIT License)
@@ -108,10 +322,10 @@ the following conditions:
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+**THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**
