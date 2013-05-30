@@ -1,6 +1,6 @@
 {
   "name":"macadamia",
-  "version":"0.3.0",
+  "version":"0.3.1",
   "description":"a simple even more unoppinionated replacement for express",
   "main":"macadamia.js",
   "author":{
@@ -15,6 +15,7 @@
   "dependencies":{
     "pea":"*",
     "merge":"*",
+    "minimatch":"*",
     "qs":"*"
   }
 }
