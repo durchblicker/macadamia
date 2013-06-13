@@ -65,6 +65,7 @@ function handler(opts, req, res, callback) {
 function stat(path, idx, opts, callback) {
   Fs.stat(path, function(err, stat) {
     if(err) return callback(err);
+    if (stat.isDirectory()) return callback(new Error('Directory'));
     stat.path = path;
     stat.etag = '"' + stat.size + '-' + Number(stat.mtime) + '"';
     callback(null, stat);
