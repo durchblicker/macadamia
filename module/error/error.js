@@ -19,7 +19,10 @@ function handler(opts, err, req, res, callback) {
     })
   };
   res.render(opts.view || 'error', data, function(err, content) {
-    if(err) return callback(err);
+    if(err) {
+      console.debug(err.stack);
+      return callback(err);
+    }
     content = content || '';
     content = Buffer.isBuffer(content) ? content : new Buffer(content, 'utf-8');
     res.size(content.length);

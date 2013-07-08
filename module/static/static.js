@@ -28,8 +28,7 @@ function handler(opts, req, res, callback) {
     return(path.indexOf(opts.root + '/') === 0) && (Path.basename(path)[0] !== '.');
   });
   if(!options.length) return callback();
-  Pea.first(options, stat).then(function(err, stat) {
-    if(err) return callback();
+  Pea.first(options, stat).success(function(stat) {
     res.set('Last-Modified', stat.mtime.toUTCString());
     res.set('Accept-Ranges', 'bytes');
     res.set('Expires', (new Date(Date.now() + opts.maxAge)).toUTCString());
@@ -59,10 +58,11 @@ function handler(opts, req, res, callback) {
     res.on('finish', function(err) {
       callback(err, err ? undefined : res.statusCode);
     });
-  });
+  }).fail(pass);
+  function pass() { callback(); }
 }
 
-function stat(path, idx, opts, callback) {
+function stat(path, callback) {
   Fs.stat(path, function(err, stat) {
     if(err) return callback(err);
     if (stat.isDirectory()) return callback(new Error('Directory'));
