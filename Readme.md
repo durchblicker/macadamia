@@ -1,4 +1,4 @@
-# Macadamia
+# Macadamia [![NPM](https://nodei.co/npm/macadamia.png)](https://nodei.co/npm/macadamia/)
 
 Macadamia is a slightly more opinionated than [Express](http://expressjs.com). Express has so many quirky features that, while good, makes it feel more like a hassle than a help. I called it Macadamia because you need to be nuts to reinvent the wheel. Never the less, making a wheel can be a pleasurable experience especially when that wheel is so much better than the one before.
 
